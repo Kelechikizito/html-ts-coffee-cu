@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BUY ME A COFFEE</title>
+  </head>
+  <body>
+    <button id="connectButton" style="cursor: pointer">Connect</button>
+    <!-- This button below will most probably call the getBalance getter function on the smart contract -->
+    <button id="balanceButton" style="cursor: pointer">Get Balance</button>
+
+    <!-- Form - "buy coffee" or "fund" -->
+    <label for="ethAmount">ETH Amount</label>
+    <input id="ethAmount" placeholder="0.1" />
+    <button type="button" id="fundButton" style="cursor: pointer">
+      Buy Coffee
+    </button>
+  </body>
+
+  <script src="./index-js.js" type="module"></script>
+</html>
