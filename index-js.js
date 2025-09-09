@@ -13,6 +13,7 @@ const fundButton = document.getElementById("fundButton");
 const balanceButton = document.getElementById("balanceButton");
 const ethAmountInput = document.getElementById("ethAmount");
 const withdrawButton = document.getElementById("withdrawButton");
+const fundingAddressButton = document.getElementById("fundingAddressButton");
 
 let walletClient;
 let publicClient;
@@ -120,7 +121,34 @@ const withdraw = async () => {
   }
 };
 
+const checkFundingAddress = async () => {
+  console.log("Checking funding address...");
+
+  if (typeof window.ethereum !== "undefined") {
+    walletClient = createWalletClient({
+      transport: custom(window.ethereum),
+    });
+    const [connectedAccount] = await walletClient.requestAddresses();
+
+    publicClient = createPublicClient({
+      transport: custom(window.ethereum),
+    });
+    const data = await publicClient.readContract({
+      address: contractAddress, // This simulateContract takes the address of the contract we want to simulate
+      abi: abi, // Takes the ABI of the contract
+      functionName: "getAddressToAmountFunded", // the name of the function we want to call
+      args: [connectedAccount], // the argument to pass to the function we want to call
+    });
+    console.log(
+      `${connectedAccount} has funded with ${formatEther(data)} ETH.`
+    );
+  } else {
+    connectButton.innerHTML = "Please install Metamask";
+  }
+};
+
 connectButton.onclick = connect;
 fundButton.onclick = fund;
 balanceButton.onclick = getBalance;
 withdrawButton.onclick = withdraw;
+fundingAddressButton.onclick = checkFundingAddress;
